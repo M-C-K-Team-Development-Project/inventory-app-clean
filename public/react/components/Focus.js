@@ -1,5 +1,4 @@
 import React from "react";
-import { Sauce } from "./Sauce";
 import { Item } from "./Item";
 
 export const Focus = ({ current, setCurrent }) => {
@@ -9,7 +8,7 @@ export const Focus = ({ current, setCurrent }) => {
 
   return (
     <>
-      {current.price ? <Item item={current} /> : <Sauce sauce={current} />}
+      {current.price ? <Item item={current} /> : <Item sauce={current} />}
       <button onClick={clickHandler}>Go Back</button>
     </>
   );

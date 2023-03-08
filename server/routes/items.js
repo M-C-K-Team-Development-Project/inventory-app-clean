@@ -1,22 +1,63 @@
-const router = require("express").Router();
-const { Item } = require("../models");
+const express = require("express");
+const router = express.Router();
+const { Items } = require("../models");
 
-router.get("/", async (req, res, next) => {
+// GET /All Items 
+router.get("/", async (req, res) => {
   try {
-    const items = await Item.findAll();
+    const items = await Items.findAll();
     res.send(items);
   } catch (error) {
-    next(error);
+    res.status(404);
   }
 });
 
-router.get("/:id", async (req, res, next) => {
-  try {
-    const item = await Item.findByPk(req.params.id);
-    res.send(item);
-  } catch (error) {
-    next(error);
-  }
-});
+// GET /Item/:id
+router.get("/:id", async (req, res) => {
+    try {
+        const item = await Items.findByPk(req.params.id);
+        res.send(item);
+        } catch (error) {
+            res.status(404);
+        }
+    });
+
+    // ADD /Item
+router.post("/", async (req, res) => {
+        try {
+            const item = await Items.create(req.body);
+            res.send(item);
+        } catch (error) {
+            res.send(error);
+        }
+    });
+
+    // UPDATE /Item/:id
+    router.put("/:id", async (req, res) => {
+        try {
+            const item = await Items.update(req.body, {
+                where: {
+                    id: req.params.id,
+                },
+            });
+            res.send(item);
+        } catch (error) {
+            res.send(error);
+        }
+    });
+
+    // DELETE /Item/:id
+    router.delete("/:id", async (req, res) => {
+        try {
+            const item = await Items.destroy({
+                where: {
+                    id: req.params.id,
+                },
+            });
+            res.send(item);
+        } catch (error) {
+            res.send(error);
+        }
+    });
 
 module.exports = router;

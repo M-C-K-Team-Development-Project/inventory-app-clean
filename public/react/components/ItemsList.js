@@ -1,11 +1,11 @@
 import React from "react";
 import { Item } from "./Item";
 
-export const ItemsList = ({ items, setCurrent }) => {
+export const ItemsList = ({ items, setArticle }) => {
   return (
     <>
       {items.map((item, idx) => {
-        return <Item item={item} key={idx} setCurrent={setCurrent} />;
+        return <Item item={item} key={idx} setArticle={setArticle} />;
       })}
     </>
   );
