@@ -1,17 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { EditForm } from './EditForm';
+import apiURL from '../api';
 
-// Name, Description, Price, Category, Image
+// Article component
 export function Article(props) {
+  const { item } = props;
+  const [form, setForm] = useState(false);
+
+  async function handleItemSubmit(itemData) {
+    try {
+      const itemResponse = await fetch(`${apiURL}/items/${item.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(itemData),
+      });
+      const updatedItem = await itemResponse.json();
+      // props.onItemUpdate(updatedItem);
+      setForm(false);
+    } catch (error) {
+      console.log('Error updating item: ', error);
+    }
+  }
+
+  async function handleItemDelete() {
+    try {
+      await fetch(`${apiURL}/items/${item.id}`, {
+        method: 'DELETE',
+      });
+      props.onItemDelete(item.id);
+    } catch (error) {
+      console.log('Error deleting item: ', error);
+    }
+  }
+
+  function setArticle() {
+    window.location.reload();
+  }
+
   return (
-    <>
-      <h3>Name:{props.item.name}</h3>
-      <h4>Des:{props.item.description}</h4>
-      <h4>Price:{props.item.price}</h4>
-      <h4>Image: <img src={props.item.image}></img></h4>
-      <h4>Category:{props.item.category}</h4>
-      <button onClick={() => props.setArticle()}>Update</button>
-      <button onClick={() => props.setArticle()}>Delete</button>
-      <button onClick={() => props.setArticle()}>Back</button>
-    </>
+    <div>
+      <h3>Name: {item.title}</h3>
+      <h4>Description: {item.description}</h4>
+      <h4>Price: {item.price}</h4>
+      <h4>Image: <img src={item.image}></img></h4>
+      <h4>Category: {item.category}</h4>
+      {!form && (
+        <button onClick={() => setForm(true)}>Update</button>
+      )}
+      {form && (
+        <EditForm
+          item={item}
+          onSubmit={handleItemSubmit}
+          onCancel={() => setForm(false)}
+        />
+      )}
+      <button onClick={handleItemDelete}>Delete</button>
+      <button onClick={props.setArticle}>Back</button>
+    </div>
   );
-}
+} 
