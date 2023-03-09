@@ -7,6 +7,7 @@ export const Add = ({ onSubmit, onCancel }) => {
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState(DEFAULT_IMAGE);
+  const [category, setCategory] = useState('');
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -16,12 +17,14 @@ export const Add = ({ onSubmit, onCancel }) => {
       description,
       price,
       image,
+      category
     });
 
     // Reset the form fields
     setTitle('');
     setDescription('');
     setPrice(0);
+    setCategory('');
     setImage(DEFAULT_IMAGE);
   }
 
@@ -51,6 +54,10 @@ export const Add = ({ onSubmit, onCancel }) => {
       <label>
         Image URL:
         <input type="text" value={image} onChange={(event) => setImage(event.target.value)} />
+      </label>
+      <label>
+        Category:
+        <input type="text" value={category} onChange={(event) => setCategory(event.target.value)} />
       </label>
       <button type="button" onClick={handleRandomImage}>Random Image</button>
       <br />
