@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { EditForm } from './EditForm';
-import apiURL from '../api';
+import React, { useState } from "react";
+import { EditForm } from "./EditForm";
+import apiURL from "../api";
 
 // Article component
 export function Article(props) {
@@ -10,9 +10,9 @@ export function Article(props) {
   async function handleItemSubmit(itemData) {
     try {
       const itemResponse = await fetch(`${apiURL}/items/${item.id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(itemData),
       });
@@ -20,18 +20,19 @@ export function Article(props) {
       // props.onItemUpdate(updatedItem);
       setForm(false);
     } catch (error) {
-      console.log('Error updating item: ', error);
+      console.log("Error updating item: ", error);
     }
   }
 
   async function handleItemDelete() {
     try {
       await fetch(`${apiURL}/items/${item.id}`, {
-        method: 'DELETE',
-      });
-      props.onItemDelete(item.id);
+        method: "DELETE",
+        body: item.id,
+      }).then(setArticle());
+      //   props.onItemDelete(item.id);
     } catch (error) {
-      console.log('Error deleting item: ', error);
+      console.log("Error deleting item: ", error);
     }
   }
 
@@ -44,11 +45,11 @@ export function Article(props) {
       <h3>Name: {item.title}</h3>
       <h4>Description: {item.description}</h4>
       <h4>Price: {item.price}</h4>
-      <h4>Image: <img src={item.image}></img></h4>
+      <h4>
+        Image: <img src={item.image}></img>
+      </h4>
       <h4>Category: {item.category}</h4>
-      {!form && (
-        <button onClick={() => setForm(true)}>Update</button>
-      )}
+      {!form && <button onClick={() => setForm(true)}>Update</button>}
       {form && (
         <EditForm
           item={item}
@@ -57,7 +58,7 @@ export function Article(props) {
         />
       )}
       <button onClick={handleItemDelete}>Delete</button>
-      <button onClick={props.setArticle}>Back</button>
+      <button onClick={() => setArticle()}>Back</button>
     </div>
   );
-} 
+}
