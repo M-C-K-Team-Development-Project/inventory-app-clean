@@ -1,34 +1,22 @@
 import React, { useState } from 'react';
 
-const DEFAULT_IMAGE = 'https://picsum.photos/200';
-
-export const Add = ({ onSubmit, onCancel }) => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState(0);
-  const [image, setImage] = useState(DEFAULT_IMAGE);
+export function EditForm (props) {
+  const [title, setTitle] = useState(props.item.title);
+  const [description, setDescription] = useState(props.item.description);
+  const [price, setPrice] = useState(props.item.price);
+  const [category, setCategory] = useState(props.item.category);
+  const [image, setImage] = useState(props.item.image);
 
   function handleSubmit(event) {
     event.preventDefault();
-
-    onSubmit({
+    const itemData = {
       title,
       description,
       price,
+      category,
       image,
-    });
-
-    // Reset the form fields
-    setTitle('');
-    setDescription('');
-    setPrice(0);
-    setImage(DEFAULT_IMAGE);
-  }
-
-  function handleRandomImage() {
-    const randomId = Math.floor(Math.random() * 1000);
-    const imageUrl = `https://picsum.photos/id/${randomId}/200`;
-    setImage(imageUrl);
+    };
+    props.onSubmit(itemData);
   }
 
   return (
@@ -49,13 +37,18 @@ export const Add = ({ onSubmit, onCancel }) => {
       </label>
       <br />
       <label>
-        Image URL:
+        Category:
+        <input type="text" value={category} onChange={(event) => setCategory(event.target.value)} />
+      </label>
+      <br />
+      <label>
+        Image:
         <input type="text" value={image} onChange={(event) => setImage(event.target.value)} />
       </label>
-      <button type="button" onClick={handleRandomImage}>Random Image</button>
       <br />
-      <button type="submit">Create Item</button>
-      <button type="button" onClick={onCancel}>Cancel</button>
+      <button type="submit">Update</button>
+      <button type="button" onClick={props.onCancel}>Cancel</button>
+      
     </form>
   );
-};
+}
