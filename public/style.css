@@ -4,6 +4,7 @@
   background-color: rgb(223, 223, 223);
 }
 
-.img {
-  width: 200px;
+img {
+  width: 100px;
+  height : 100px;
 }
