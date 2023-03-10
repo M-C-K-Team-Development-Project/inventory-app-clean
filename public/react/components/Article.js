@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { EditForm } from "./EditForm";
-import apiURL from "../api";
+import React, { useState } from 'react';
+import { EditForm } from './EditForm';
+import apiURL from '../api';
+import { ItemsList } from './ItemsList';
 
 // Article component
 export function Article(props) {
@@ -17,7 +18,6 @@ export function Article(props) {
         body: JSON.stringify(itemData),
       });
       const updatedItem = await itemResponse.json();
-      // props.onItemUpdate(updatedItem);
       setForm(false);
     } catch (error) {
       console.log("Error updating item: ", error);
@@ -27,10 +27,10 @@ export function Article(props) {
   async function handleItemDelete() {
     try {
       await fetch(`${apiURL}/items/${item.id}`, {
-        method: "DELETE",
+      method: 'DELETE',
         body: item.id,
-      }).then(setArticle());
-      //   props.onItemDelete(item.id);
+      }).then(setArticle());  
+
     } catch (error) {
       console.log("Error deleting item: ", error);
     }
@@ -49,18 +49,18 @@ export function Article(props) {
         Image: <img src={item.image}></img>
       </h4>
       <h4>Category: {item.category}</h4>
-      <div className="form">
-        {!form && <button onClick={() => setForm(true)}>Update</button>}
-        {form && (
-          <EditForm
-            item={item}
-            onSubmit={handleItemSubmit}
-            onCancel={() => setForm(false)}
-          />
-        )}
-        <button onClick={handleItemDelete}>Delete</button>
-        <button onClick={() => setArticle()}>Back</button>
-      </div>
+      {!form && (
+        <button onClick={() => setForm(true)}>Update</button>
+      )}
+      {form && (
+        <EditForm
+          item={item}
+          onSubmit={handleItemSubmit}
+          onCancel={() => setForm(false)}
+        />
+      )}
+      <button onClick={handleItemDelete}>Delete</button>
+      <button onClick={setArticle}>Back</button>
     </div>
   );
 }

@@ -13,12 +13,8 @@ export function Item(props) {
     }
   }
 
-  return (
-    <>
-      <div className="item">
-        <h3 onClick={fetchReq}>{props.item.title}</h3>
-        <img src={props.item.image} alt={props.item.title} />
-      </div>
-    </>
-  );
-}
+return <>
+    <h3 onClick={fetchReq}>{props.item.title}</h3>
+    <img src={props.item.image} alt={props.item.title} onClick={fetchReq} />
+  </>
+} 
