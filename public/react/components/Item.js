@@ -20,7 +20,7 @@ export function Item(props) {
 
   return <>
     <h3 onClick={fetchReq}>{props.item.title}</h3>
-    <img src={props.item.image} alt={props.item.title} />
+    <img src={props.item.image} alt={props.item.title} onClick={fetchReq} />
   </>
 } 
 	

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { EditForm } from './EditForm';
 import apiURL from '../api';
+import { ItemsList } from './ItemsList';
 
 // Article component
 export function Article(props) {
@@ -17,7 +18,6 @@ export function Article(props) {
         body: JSON.stringify(itemData),
       });
       const updatedItem = await itemResponse.json();
-      // props.onItemUpdate(updatedItem);
       setForm(false);
     } catch (error) {
       console.log('Error updating item: ', error);
@@ -28,8 +28,8 @@ export function Article(props) {
     try {
       await fetch(`${apiURL}/items/${item.id}`, {
         method: 'DELETE',
-      });
-      props.onItemDelete(item.id);
+        body: item.id,
+      }).then(setArticle());  
     } catch (error) {
       console.log('Error deleting item: ', error);
     }
@@ -57,7 +57,7 @@ export function Article(props) {
         />
       )}
       <button onClick={handleItemDelete}>Delete</button>
-      <button onClick={props.setArticle}>Back</button>
+      <button onClick={setArticle}>Back</button>
     </div>
   );
 } 
