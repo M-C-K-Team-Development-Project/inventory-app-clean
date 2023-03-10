@@ -11,27 +11,28 @@ export function Article(props) {
   async function handleItemSubmit(itemData) {
     try {
       const itemResponse = await fetch(`${apiURL}/items/${item.id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(itemData),
       });
       const updatedItem = await itemResponse.json();
       setForm(false);
     } catch (error) {
-      console.log('Error updating item: ', error);
+      console.log("Error updating item: ", error);
     }
   }
 
   async function handleItemDelete() {
     try {
       await fetch(`${apiURL}/items/${item.id}`, {
-        method: 'DELETE',
+      method: 'DELETE',
         body: item.id,
       }).then(setArticle());  
+
     } catch (error) {
-      console.log('Error deleting item: ', error);
+      console.log("Error deleting item: ", error);
     }
   }
 
@@ -40,11 +41,13 @@ export function Article(props) {
   }
 
   return (
-    <div>
+    <div className="article">
       <h3>Name: {item.title}</h3>
       <h4>Description: {item.description}</h4>
       <h4>Price: {item.price}</h4>
-      <h4>Image: <img src={item.image}></img></h4>
+      <h4>
+        Image: <img src={item.image}></img>
+      </h4>
       <h4>Category: {item.category}</h4>
       {!form && (
         <button onClick={() => setForm(true)}>Update</button>
@@ -60,4 +63,4 @@ export function Article(props) {
       <button onClick={setArticle}>Back</button>
     </div>
   );
-} 
+}
