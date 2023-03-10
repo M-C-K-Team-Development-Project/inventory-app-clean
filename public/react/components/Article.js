@@ -41,7 +41,7 @@ export function Article(props) {
   }
 
   return (
-    <div>
+    <div className="article">
       <h3>Name: {item.title}</h3>
       <h4>Description: {item.description}</h4>
       <h4>Price: {item.price}</h4>
@@ -49,16 +49,18 @@ export function Article(props) {
         Image: <img src={item.image}></img>
       </h4>
       <h4>Category: {item.category}</h4>
-      {!form && <button onClick={() => setForm(true)}>Update</button>}
-      {form && (
-        <EditForm
-          item={item}
-          onSubmit={handleItemSubmit}
-          onCancel={() => setForm(false)}
-        />
-      )}
-      <button onClick={handleItemDelete}>Delete</button>
-      <button onClick={() => setArticle()}>Back</button>
+      <div className="form">
+        {!form && <button onClick={() => setForm(true)}>Update</button>}
+        {form && (
+          <EditForm
+            item={item}
+            onSubmit={handleItemSubmit}
+            onCancel={() => setForm(false)}
+          />
+        )}
+        <button onClick={handleItemDelete}>Delete</button>
+        <button onClick={() => setArticle()}>Back</button>
+      </div>
     </div>
   );
 }
